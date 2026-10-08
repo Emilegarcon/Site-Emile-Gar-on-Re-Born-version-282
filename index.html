@@ -1377,7 +1377,7 @@ V.creation=(h,q)=>{ const c=findC(h); if(!c) return V.nf();
           <tr><th scope="row">${x("Matières","Materials")}</th><td>${x("Cachemire intégral","Full cashmere")}<br>${x("Foulards vintage","Vintage scarves")}</td></tr>
           <tr><th scope="row">${x("Gestes","Techniques")}</th><td>${c.tech.map(term).join("<br>")}</td></tr>
           <tr><th scope="row">${x("Doublure","Lining")}</th><td>${x("Corps, intérieurs de poches et de manches","Body, pocket and sleeve interiors")}</td></tr>
-          <tr><th scope="row">${x("Temps de travail","Time taken")}</th><td>${x("Plusieurs jours pour la seule doublure","Several days for the lining alone")}</td></tr>
+          <tr><th scope="row">${x("Temps de travail","Time taken")}</th><td>${x("2 jours pour la doublure","2 days for the lining")}<br>${x("1 journée pour la broderie artisanale","1 day for the artisanal embroidery")}</td></tr>
           <tr><th scope="row">${x("Atelier","Workshop")}</th><td>${x("Tunis et Paris","Tunis and Paris")}</td></tr>
           <tr><th scope="row">${x("Stock","Stock")}</th><td>${c.etat==="vendue"?0:c.stock} — ${x("pièce unique","one of a kind")}</td></tr>
           <tr><th scope="row">${x("Entretien","Care")}</th><td>${x("Pressing professionnel uniquement","Professional dry cleaning only")}</td></tr>
