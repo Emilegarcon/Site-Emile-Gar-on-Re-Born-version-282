@@ -47,6 +47,6 @@ GitHub Pages republie le site automatiquement (environ 1 minute). Domaine prévu
 - Hébergeur à confirmer (GitHub Pages pour le site, Shopify pour le paiement), cookies, dates des pages légales.
 - Deux récits « Récit à écrire », page Couture (origine, point de départ, cadre photo vide).
 - Presse : liens et certaines dates.
-- Matières à confirmer : Maurice, Honoré, Marius, Aristide, Ambroise, Clément. Faute sur l'étiquette d'Honoré (« Parc qu'il y a »).
+- Faute sur l'étiquette d'Honoré (« Parc qu'il y a »).
 - Étole Velours & Soie : masquée, brouillon dans Shopify.
 - Page Compte : simulée (à relier aux comptes clients Shopify).
