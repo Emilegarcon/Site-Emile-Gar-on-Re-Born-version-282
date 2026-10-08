@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/33225821/README.md)
 # Emile Garçon — site (Re)Born
 
 Prototype du site de la Maison Emile Garçon : pièces uniques pour homme, upcyclées à partir de vêtements chinés et de foulards vintage. Showroom au 15 Galerie Vivienne, Paris.
