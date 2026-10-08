@@ -430,7 +430,10 @@ button.link{background:none;border:0;border-bottom:1px solid var(--gold);border-
 .gallery .frame{height:auto;width:calc(100% - 14px);aspect-ratio:auto}
 .gallery .frame img{height:auto;aspect-ratio:auto;max-height:85vh;object-fit:cover}
 .gallery .frame figcaption,.split .frame figcaption{position:static;margin-top:22px}
-.gallery .frame::before,.split .frame::before,.diptych .frame::before{bottom:23px}
+/* Cadre doré calé sur l'image (cellule de grille commune), quelle que soit la hauteur de la légende */
+.gallery .frame,.split .frame,.diptych .frame{display:grid;grid-template-columns:100%;align-content:start}
+.gallery .frame::before,.split .frame::before,.diptych .frame::before{position:relative;inset:auto;grid-area:1/1;transform:translate(14px,14px)}
+.gallery .frame>img,.gallery .frame>.empty-frame,.split .frame>img,.diptych .frame>img,.diptych .frame>.empty-frame{grid-area:1/1}
 .gallery .frame .empty-frame{width:100%}
 .gallery .empty-frame{aspect-ratio:4/5;border:1px solid var(--line-strong);background:var(--bg-sunken);display:flex;flex-direction:column;justify-content:flex-end;padding:20px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--stone);position:relative}
 .toggle{display:flex;gap:6px;margin-bottom:22px}
