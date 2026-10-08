@@ -947,12 +947,44 @@ function say(m){ const l=document.getElementById("live"); l.textContent=""; setT
 function add(h){ const p=find(h); if(!p||!buyable(p)||bag.includes(h)) return; bag.push(h); save(); say(x(`${title(p)} ajoutée au panier`,`${title(p)} added to bag`)); render(false); open("cart"); }
 function removeItem(h){ bag=bag.filter(b=>b!==h); save(); drawCart(); render(false); }
 function simulateSale(h){ const p=find(h); p.etat="vendue"; bag=bag.filter(b=>b!==h); save(); bagAlert=p; drawCart(); render(false); }
+
+/* ===== Shopify : paiement et disponibilité en direct ===== */
+const SHOP={
+  domain:"iwkwfi-et.myshopify.com",
+  token:"", /* jeton public Storefront API (canal Headless) : active la synchro prix / disponibilité */
+  api:"2025-07",
+  vid:{"chemise-emile":54899611173206,"manteau-en-cachemire-marine":55535238807894,"manteau-en-cachemire-noir":55535274492246,"manteau-en-cachemire-noir-aux-parements-rouge":55535280030038,"chemise-felix":55565688570198,"chemise-octave":55565692436822,"chemise-gustave":55565864960342,"chemise-jules":55581740302678,"chemise-leon":55581878714710,"chemise-hector":55585024672086,"chemise-gaston":55590382141782,"chemise-armand":55590536577366,"manteau-edmond":55594128998742,"manteau-anatole":55594202988886,"veste-raoul":55633649729878,"veste-fernand":55636494909782,"veste-maurice":55649361002838,"veste-honore":55649555906902,"veste-marius":55649692909910,"veste-aristide":55650011414870,"manteau-ambroise":55650322645334,"manteau-clement":55650593243478,"chemise-severin":55652983570774,"chemise-lazare":55653063852374,"chemise-eugene":55653351031126}
+};
+function checkoutUrl(){ const v=bag.map(h=>SHOP.vid[h]).filter(Boolean); return v.length?`https://${SHOP.domain}/cart/${v.map(i=>i+":1").join(",")}`:null; }
+function goCheckout(){
+  const miss=bag.filter(h=>!SHOP.vid[h]), u=checkoutUrl(), m=document.getElementById("co-msg");
+  if(miss.length||!u){ m.textContent=x("Une pièce de votre panier n’est plus disponible en ligne. Retirez-la pour continuer.","A piece in your bag is no longer available online. Remove it to continue."); return; }
+  m.textContent=x("Ouverture du paiement sécurisé Shopify…","Opening Shopify secure checkout…");
+  let inFrame=true; try{ inFrame=window.self!==window.top; }catch(e){}
+  if(inFrame){ const w=window.open(u,"_blank","noopener"); if(!w) m.innerHTML=`<a class="link" href="${u}" target="_blank" rel="noopener">${x("Ouvrir le paiement","Open checkout")}</a>`; }
+  else location.href=u;
+}
+async function syncShop(){
+  if(!SHOP.token) return;
+  const hs=Object.keys(SHOP.vid), ids=hs.map(h=>"gid://shopify/ProductVariant/"+SHOP.vid[h]);
+  try{
+    const r=await fetch(`https://${SHOP.domain}/api/${SHOP.api}/graphql.json`,{method:"POST",headers:{"Content-Type":"application/json","X-Shopify-Storefront-Access-Token":SHOP.token},
+      body:JSON.stringify({query:"query($ids:[ID!]!){nodes(ids:$ids){... on ProductVariant{id availableForSale price{amount}}}}",variables:{ids}})});
+    const j=await r.json(), n=(j&&j.data&&j.data.nodes)||[];
+    if(!n.some(Boolean)){ console.warn("Shopify : aucune pièce visible avec ce jeton (canal non publié ?)",j); return; }
+    let changed=false;
+    n.forEach((v,i)=>{ const p=find(hs[i]); if(!p) return;
+      if(!v||!v.availableForSale){ if(p.etat!=="vendue"){ p.etat="vendue"; changed=true; } return; }
+      const pr=Math.round(parseFloat(v.price.amount)); if(pr&&pr!==p.prix){ p.prix=pr; changed=true; } });
+    if(changed){ const gone=bag.filter(h=>{const p=find(h);return !p||!buyable(p);}); if(gone.length){ bagAlert=find(gone[0]); bag=bag.filter(h=>!gone.includes(h)); save(); } render(false); drawCart(); }
+  }catch(e){ console.warn("Shopify : synchronisation impossible",e); }
+}
 function drawCart(){
   const b=document.getElementById("cart-body"), f=document.getElementById("cart-foot"); let html="";
   if(bagAlert){ const n=near(bagAlert,2);
-    html+=`<div class="alert" role="alert"><p>${x(`<strong>${title(bagAlert)}</strong> vient d’être vendue au showroom. Elle a été retirée de votre panier.`,`<strong>${title(bagAlert)}</strong> has just been sold at the showroom. It has been removed from your bag.`)}</p>${n.length?`<p>${x("Pièces proches","Related pieces")} : ${n.map(q=>`<a href="${purl(q)}" data-close-link>${title(q)}</a>`).join(", ")}</p>`:""}</div>`; }
+    html+=`<div class="alert" role="alert"><p>${x(`<strong>${title(bagAlert)}</strong> vient d’être vendue. Elle a été retirée de votre panier.`,`<strong>${title(bagAlert)}</strong> has just been sold. It has been removed from your bag.`)}</p>${n.length?`<p>${x("Pièces proches","Related pieces")} : ${n.map(q=>`<a href="${purl(q)}" data-close-link>${title(q)}</a>`).join(", ")}</p>`:""}</div>`; }
   if(!bag.length){ b.innerHTML=html+`<p>${x("Votre panier est vide.","Your bag is empty.")}</p><p style="margin-top:14px"><a class="link" href="#/collection" data-close-link>${x("Voir les pièces","View the pieces")}</a></p>`; f.innerHTML=""; return; }
-  html+=bag.map(h=>{const p=find(h),ph=photos(p)[0];return `<div class="line-item"><div class="thumb">${ph?`<img src="${IMG[ph.k]}" alt="">`:""}</div><div><h3>${title(p)}</h3><p>${x("Pièce unique","One of a kind")} — ${p.couture?x("Collection Couture","Couture collection"):x(CAT1[catOf(p)][0],CAT1[catOf(p)][1])}</p><span class="price">${euro(p.prix)}</span><div class="acts"><button type="button" data-remove="${h}">${x("Retirer","Remove")}</button><button type="button" data-sim="${h}">${x("Simuler une vente au showroom","Simulate a showroom sale")}</button></div></div></div>`}).join("");
+  html+=bag.map(h=>{const p=find(h),ph=photos(p)[0];return `<div class="line-item"><div class="thumb">${ph?`<img src="${IMG[ph.k]}" alt="">`:""}</div><div><h3>${title(p)}</h3><p>${x("Pièce unique","One of a kind")} — ${p.couture?x("Collection Couture","Couture collection"):x(CAT1[catOf(p)][0],CAT1[catOf(p)][1])}</p><span class="price">${euro(p.prix)}</span><div class="acts"><button type="button" data-remove="${h}">${x("Retirer","Remove")}</button></div></div></div>`}).join("");
   b.innerHTML=html;
   f.innerHTML=`<p class="pnote" style="margin:0">${x("Pièces uniques : elles ne sont pas réservées tant que la commande n’est pas validée.","One-of-a-kind pieces are not held until the order is confirmed.")}</p>
     <div class="total"><span>${x("Sous-total","Subtotal")}</span><span>${euro(bag.reduce((s,h)=>s+find(h).prix,0))}</span></div>
@@ -1646,7 +1678,7 @@ document.addEventListener("click",e=>{
   if(d.view){ setQ({vue:d.view}); return; }
   if("close" in d){ closeAll(); return; }
   if("closeLink" in d){ closeAll(); return; }
-  if(b.id==="checkout"){ document.getElementById("co-msg").textContent=x("Dans le site final, ce bouton ouvre le paiement sécurisé Shopify, qui revérifie la disponibilité de chaque pièce.","On the live site, this opens Shopify’s secure checkout, which re-checks each piece’s availability."); return; }
+  if(b.id==="checkout"){ goCheckout(); return; }
   if("account" in d){ e.preventDefault(); location.hash="#/compte"+(ACC?"":"?mode=connexion"); return; }
   if(b.id==="b-account"){ location.hash=ACC?"#/compte":"#/compte?mode=connexion"; return; }
   if(d.acc==="logout"){ ACC=null; saveAcc(); say(x("Vous êtes déconnecté.","You are signed out.")); location.hash="#/compte?mode=connexion"; render(); return; }
@@ -1698,7 +1730,7 @@ document.getElementById("menu-x").addEventListener("click",()=>{closeMenu();docu
 document.getElementById("menu").addEventListener("click",e=>{ if(e.target.closest("a")) closeMenu(); });
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ const g=document.getElementById("gate"); if(!g.hidden){closeGate("fr");return;} closeAll(); closeMenu(); } });
 window.addEventListener("hashchange",()=>render());
-chrome(); render(); gate();
+chrome(); render(); gate(); syncShop();
 
 /* Typographie de marque : le « (Re) » de (Re)Born toujours en italique, partout où le nom s'affiche */
 (function(){
