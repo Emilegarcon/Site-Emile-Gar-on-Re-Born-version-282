@@ -328,7 +328,7 @@ button.link{background:none;border:0;border-bottom:1px solid var(--gold);border-
 .m-lede{font-family:var(--display);font-style:italic;font-size:clamp(20px,2vw,26px)!important;line-height:1.4;color:var(--ink)!important;max-width:34ch!important}
 .m-intro{margin-bottom:clamp(28px,4vw,48px)}
 .m-intro h2{font-size:clamp(30px,4vw,46px);margin-top:14px}
-.m-story{padding-top:clamp(40px,5vw,64px);padding-bottom:clamp(40px,5vw,64px)}
+.m-story{padding-top:clamp(40px,5vw,64px);padding-bottom:clamp(40px,5vw,64px)}section.m-story.m-first{padding-top:clamp(8px,2vw,24px)}
 .fil{list-style:none;margin:0;padding:0 0 0 clamp(36px,5vw,72px);position:relative}
 .fil::before{content:"";position:absolute;left:clamp(8px,1.2vw,16px);top:10px;bottom:10px;border-left:1.5px dashed var(--gold)}
 .fil li{position:relative;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.4fr);gap:clamp(20px,4vw,64px);padding:clamp(28px,4vw,48px) 0;border-top:1px solid var(--line)}
@@ -1240,7 +1240,7 @@ V.reborn=()=>{
 V.maison=(sec)=>({title:x("La Maison Garçon","The Garçon House")+" — Emile Garçon", html:`<div class="wrap">
   <div class="page-head m-head"><span class="eyebrow">${x("Transmission","Inheritance")}</span><h1 tabindex="-1">${x("La Maison Garçon","The Garçon House")}</h1><p class="m-lede">${x("Chez les Garçon, on apprend à regarder la matière avant de la transformer. Trois générations, trois métiers, un même fil.","In the Garçon family, you learn to look at a material before you change it. Three generations, three crafts, one thread.")}</p></div></div>
 
-  <section class="m-story"><div class="wrap">
+  <section class="m-story m-first"><div class="wrap">
     <div class="m-intro"><span class="eyebrow">${x("Histoire","History")}</span><h2 id="m-histoire" tabindex="-1">${x("Un fil de famille","A family thread")}</h2></div>
     <ol class="fil">
       <li><div class="fil-who"><span class="fil-gen">${x("Première génération","First generation")}</span><h3>Ernest Garçon</h3><p class="fil-role">${x("L’arrière-grand-père, tailleur sur mesure pour homme — Genève, vers 1905","The great-grandfather, bespoke men’s tailor — Geneva, around 1905")}</p></div>
