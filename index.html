@@ -240,7 +240,7 @@ section{padding:clamp(64px,9vw,120px) 0;position:relative}
 .mp-text{white-space:pre-wrap;font-family:var(--body);font-size:13px;line-height:1.5;color:var(--ink);background:var(--bg-sunken);padding:12px;margin:0 0 12px;user-select:text}
 .mp-copy{min-height:40px;padding:10px 16px;font-size:12px}
 .more-photos .link{margin-left:4px;white-space:nowrap}
-@media (max-width:820px){.more-photos{margin-top:40px}@media (max-width:900px){.more-photos{margin-top:0}.gallery-stack+.more-photos{margin-top:30px}}}
+@media (max-width:820px){.more-photos{margin-top:40px}section.related{padding-top:clamp(24px,5vw,64px)}@media (max-width:900px){.more-photos{margin-top:0}.gallery-stack+.more-photos{margin-top:30px}}}
 
 /* Showroom : ligne Accès sur une seule ligne */
 .gv-info th{width:28%}
@@ -1203,7 +1203,7 @@ V.piece=(h,q)=>{
         ${st.length?`<p style="margin-top:26px"><span class="eyebrow">${x("Dans les récits de la Maison","In the House’s stories")}</span></p><p style="margin-top:10px">${st.map(r=>`<a class="link" href="#/maison/recits/${r.slug}">${L(r.t)}</a>`).join(" ")}</p>`:""}
       </div>
     </div></div>
-    <section style="margin-top:clamp(40px,6vw,72px);border-top:1px solid var(--line)"><div class="wrap">${head(x("À découvrir","Discover"),x("Pièces proches","Related pieces"),"",`<a class="link" href="#/collection">${x("Toute la collection","The whole collection")}</a>`)}<div class="product-grid">${spread(near(p,8)).filter((q,i,arr)=>i===0||clash(q,arr[i-1])===0).slice(0,4).map(card).join("")}</div></div></section>`};
+    <section class="related" style="margin-top:clamp(40px,6vw,72px);border-top:1px solid var(--line)"><div class="wrap">${head(x("À découvrir","Discover"),x("Pièces proches","Related pieces"),"",`<a class="link" href="#/collection">${x("Toute la collection","The whole collection")}</a>`)}<div class="product-grid">${spread(near(p,8)).filter((q,i,arr)=>i===0||clash(q,arr[i-1])===0).slice(0,4).map(card).join("")}</div></div></section>`};
 };
 
 V.reborn=()=>{
@@ -1386,7 +1386,7 @@ V.creation=(h,q)=>{ const c=findC(h); if(!c) return V.nf();
           <tr><th scope="row">${x("Entretien","Care")}</th><td>${x("Pressing professionnel uniquement","Professional dry cleaning only")}</td></tr>
         </tbody></table>
       </div></div></div>
-    <section style="margin-top:clamp(40px,6vw,72px);border-top:1px solid var(--line)"><div class="wrap">${head("Couture",x("Les autres créations","The other creations"),"",`<a class="link" href="#/couture">${x("Toutes les créations","All creations")}</a>`)}<div class="product-grid grid3">${others.map(ccard).join("")}</div></div></section></div>`};
+    <section class="related" style="margin-top:clamp(40px,6vw,72px);border-top:1px solid var(--line)"><div class="wrap">${head("Couture",x("Les autres créations","The other creations"),"",`<a class="link" href="#/couture">${x("Toutes les créations","All creations")}</a>`)}<div class="product-grid grid3">${others.map(ccard).join("")}</div></div></section></div>`};
 };
 
 /* Presse : une entrée par parution. type "print" (presse écrite) ou "web". date "AAAA-MM" ou "" si inconnue.
