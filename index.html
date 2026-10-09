@@ -173,7 +173,7 @@ section{padding:clamp(64px,9vw,120px) 0;position:relative}
 .film .wrap{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(28px,5vw,72px);align-items:center}
 .film .eyebrow{color:var(--gold-bright)}
 
-@media (max-width:900px){section.c-hero{padding-bottom:24px!important}section.geste,section.universe,section.h-maison{padding-top:24px!important}section.c-band{padding-top:49px}section.c-band::before{top:24px}}.film h2{line-height:1.1}.film h2 em{font-style:italic;font-weight:400;color:var(--gold-bright)}
+@media (max-width:900px){section.c-hero{padding-bottom:24px!important}section.geste,section.universe,section.h-maison{padding-top:24px!important}section.c-band{padding-top:49px}section.c-band::before{top:24px}}br.br-m{display:none}@media (max-width:900px){br.br-m{display:inline}}.film h2{line-height:1.1}.film h2 em{font-style:italic;font-weight:400;color:var(--gold-bright)}
 
 .film-meta{margin-top:28px;border-top:1px solid color-mix(in srgb,var(--bg) 22%,transparent)}
 .film-meta div{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px dashed color-mix(in srgb,var(--bg) 22%,transparent);font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase}
@@ -1092,7 +1092,7 @@ V.home=()=>{
   </div></section>
 
   <section id="collection" class="coll-cream" style="padding-top:clamp(24px,3vw,36px);padding-bottom:clamp(40px,5vw,64px)"><div class="wrap">
-    ${head(x("La collection","The collection"),x(`${avail.length} pièces, ${avail.length} vies`,`${avail.length} pieces, ${avail.length} lives`),x("Chaque vêtement porte un prénom. Une fois vendu, il ne revient jamais en stock.","Each garment has a name. Once sold, it never comes back."),`<a class="link" href="#/collection">${x("Toute la collection","The whole collection")}</a>`)}
+    ${head(x("La collection","The collection"),x(`${avail.length} pièces, ${avail.length} vies`,`${avail.length} pieces, ${avail.length} lives`),x("Chaque vêtement porte un prénom.<br class='br-m'> Une fois vendu, il ne revient jamais en stock.","Each garment has a name.<br class='br-m'> Once sold, it never comes back."),`<a class="link" href="#/collection">${x("Toute la collection","The whole collection")}</a>`)}
     <div class="product-grid">${spread(avail.filter(p=>photos(p).length)).slice(0,8).map(card).join("")}</div>
   </div></section>
 
