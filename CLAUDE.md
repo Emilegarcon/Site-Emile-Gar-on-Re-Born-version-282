@@ -30,7 +30,7 @@ GitHub Pages republie le site automatiquement (environ 1 minute). Domaine prévu
 - `SHOP.token` : jeton public Storefront API (canal Headless), vide pour l'instant. S'il est renseigné, `syncShop()`
   met à jour prix et disponibilité au chargement.
 - Créer une pièce : `productCreate` → prix/SKU (`productVariantsBulkUpdate`, politique de stock DENY) →
-  stock 1 sur l'emplacement `gid://shopify/Location/121753895254` (Showroom) → photos et textes alternatifs →
+  stock 1 sur l'emplacement `gid://shopify/Location/121753895254` (Showroom) → photos et textes alternatifs (pousser d'abord les images sur GitHub, puis `productCreateMedia` avec `originalSource` = `https://raw.githubusercontent.com/Emilegarcon/Site-Emile-Gar-on-Re-Born-version-282/<commit>/img/<fichier>.webp` ; les envois directs vers Shopify sont bloqués) →
   publication sur les canaux 356149526870 (Boutique en ligne), 356149559638 (Shop), 356149592406 (Point de vente).
 - Pièce vendue : `etat:"vendue"` sur le site (ou retrait), produit **archivé** dans Shopify avec un stock à 0.
 - Ce qui n'est pas sur le site ne doit plus être disponible sur Shopify.
