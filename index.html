@@ -1005,6 +1005,8 @@ function openMail(href){ const framed=(()=>{try{return window.top!==window.self}
 const STUDIO_MAIL = "studiogarcon@gmail.com";
 /* Clé d’accès Web3Forms (gratuit) : si renseignée, le formulaire de rendez-vous envoie directement la demande par e-mail au studio. */
 const FORM_KEY = "";
+/* Comptes clients Shopify (nouveaux comptes : connexion par code e-mail) */
+const SHOP_ACCOUNT = "https://shopify.com/105021538646/account";
 const HANDLE_ALIAS = {"manteau-emile":"chemise-emile"};
 const find = h => P.find(p=>p.h===h) || (typeof C!=="undefined" ? C.find(c=>c.h===h) : undefined);
 const buyable = p => p.etat==="dispo"||p.etat==="showroom";
@@ -1668,42 +1670,10 @@ let ACC=null; try{ ACC=JSON.parse(localStorage.getItem("eg-account")||"null"); }
 let ACC_PENDING=null; // {email, first, last, news, mode}
 let ACCS={}; try{ ACCS=JSON.parse(localStorage.getItem("eg-accounts")||"{}")||{}; }catch(e){}
 const saveAcc=()=>{ try{ if(ACC){ localStorage.setItem("eg-account",JSON.stringify(ACC)); ACCS[ACC.email.toLowerCase()]=ACC; localStorage.setItem("eg-accounts",JSON.stringify(ACCS)); } else localStorage.removeItem("eg-account"); }catch(e){} };
-V.account=(q)=>{
-  const mode=q.get("mode")==="connexion"?"login":"signup";
-  if(ACC){ const held=P.filter(p=>p.etat==="showroom").slice(0,0);
-    return {title:x("Mon compte","My account")+" — Emile Garçon", html:`<div class="wrap">
-    <div class="page-head"><span class="eyebrow">${x("Espace client","Customer area")}</span><h1 tabindex="-1">${ACC.first?`${x("Bonjour","Hello")} ${esc(ACC.first)}`:x("Bienvenue","Welcome")}</h1><p class="m-lede">${x("Vos commandes, vos rendez-vous et vos adresses, au même endroit.","Your orders, appointments and addresses, in one place.")}</p></div>
-    <div class="acc-grid">
-      <section class="acc-card"><h2>${x("Commandes","Orders")}</h2><p>${x("Vous n’avez pas encore passé de commande.","You have not placed an order yet.")}</p><a class="link" href="#/collection">${x("Voir la collection","See the collection")}</a></section>
-      <section class="acc-card"><h2>${x("Rendez-vous au showroom","Showroom appointments")}</h2><p>${x("Aucun rendez-vous à venir.","No upcoming appointment.")}</p><a class="link" href="#/showroom">${x("Prendre rendez-vous","Book an appointment")}</a></section>
-      <section class="acc-card"><h2>${x("Informations","Details")}</h2><dl class="acc-dl"><div><dt>${x("Nom","Name")}</dt><dd>${(ACC.first||ACC.last)?esc((ACC.first||"")+" "+(ACC.last||"")):x("À compléter","To complete")}</dd></div><div><dt>E-mail</dt><dd>${esc(ACC.email)}</dd></div><div><dt>${x("Adresse de livraison","Shipping address")}</dt><dd>${x("Ajoutée lors de votre première commande","Added with your first order")}</dd></div><div><dt>${x("Nouvelles pièces","New pieces")}</dt><dd>${ACC.news?x("Vous êtes prévenu en avant-première","You hear about them first"):x("Non inscrit","Not subscribed")}</dd></div></dl></section>
-    </div>
-    <p style="margin:clamp(28px,4vw,44px) 0 clamp(48px,6vw,80px)"><button type="button" class="btn ghost" data-acc="logout">${x("Se déconnecter","Sign out")}</button></p>
-  </div>`}; }
-  if(ACC_PENDING){ return {title:x("Code de connexion","Sign-in code")+" — Emile Garçon", html:`<div class="wrap acc-narrow">
-    <div class="page-head"><span class="eyebrow">${x("Vérification","Verification")}</span><h1 tabindex="-1">${x("Saisissez votre code","Enter your code")}</h1><p>${x("Un code à 6 chiffres vient d’être envoyé à","A 6-digit code has just been sent to")} <strong>${esc(ACC_PENDING.email)}</strong>.</p></div>
-    <form class="form" id="f-code" novalidate>
-      <div><label for="a-code">${x("Code","Code")}</label><input id="a-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" aria-describedby="e-code a-hint"><p class="err" id="e-code" hidden>${x("Le code doit comporter 6 chiffres.","The code must have 6 digits.")}</p>
-        <p class="acc-hint" id="a-hint">${x("Prototype : aucun e-mail n’est envoyé, saisissez","Prototype: no email is sent, enter")} <strong>123456</strong>.</p></div>
-      <button class="btn" type="submit">${x("Valider","Confirm")}</button>
-    </form>
-    <p class="acc-switch"><button type="button" class="link" data-acc="back">${x("Modifier l’adresse e-mail","Change email address")}</button></p>
-  </div>`}; }
-  const signup=mode==="signup";
-  return {title:(signup?x("Créer un compte","Create an account"):x("Se connecter","Sign in"))+" — Emile Garçon", html:`<div class="wrap acc-narrow">
-    <div class="page-head"><span class="eyebrow">${x("Espace client","Customer area")}</span><h1 tabindex="-1">${signup?x("Créer un compte","Create an account"):x("Se connecter","Sign in")}</h1>
-      <p>${signup?x("Suivez vos commandes, retrouvez vos rendez-vous et soyez prévenu avant tout le monde des nouvelles pièces.","Track your orders, find your appointments and hear about new pieces before anyone else."):x("Saisissez votre adresse e-mail : nous vous envoyons un code de connexion. Aucun mot de passe à retenir.","Enter your email address and we will send you a sign-in code. No password to remember.")}</p></div>
-    <div class="chips acc-tabs" role="tablist" aria-label="${x("Espace client","Customer area")}"><a role="tab" href="#/compte" aria-selected="${signup}" aria-pressed="${signup}">${x("Créer un compte","Create an account")}</a><a role="tab" href="#/compte?mode=connexion" aria-selected="${!signup}" aria-pressed="${!signup}">${x("Se connecter","Sign in")}</a></div>
-    <form class="form" id="f-acc" data-mode="${mode}" novalidate>
-      ${signup?`<div class="acc-two"><div><label for="a-first">${x("Prénom","First name")}</label><input id="a-first" autocomplete="given-name" aria-describedby="e-first"><p class="err" id="e-first" hidden>${x("Indiquez votre prénom.","Enter your first name.")}</p></div>
-      <div><label for="a-last">${x("Nom","Last name")}</label><input id="a-last" autocomplete="family-name"></div></div>`:""}
-      <div><label for="a-mail">E-mail</label><input id="a-mail" type="email" autocomplete="email" aria-describedby="e-mail"><p class="err" id="e-mail" hidden>${x("Indiquez une adresse e-mail valide, par exemple nom@domaine.fr.","Enter a valid email address, e.g. name@domain.com.")}</p></div>
-      ${signup?`<label class="acc-check"><input type="checkbox" id="a-news"> <span>${x("Me prévenir en avant-première des nouvelles pièces (facultatif)","Tell me first about new pieces (optional)")}</span></label>`:""}
-      <button class="btn" type="submit">${x("Recevoir mon code","Send my code")}</button>
-      <p class="acc-legal">${x("Vos données servent uniquement à gérer votre compte et vos commandes.","Your data is used only to manage your account and orders.")} <a class="link" href="#/mentions-legales?s=l-donnees">${x("Politique de confidentialité","Privacy policy")}</a></p>
-    </form>
-  </div>`};
-};
+V.account=(q)=>({title:x("Mon compte","My account")+" — Emile Garçon", html:`<div class="wrap"><div class="page-head"><span class="eyebrow">${x("Espace client","Customer area")}</span><h1 tabindex="-1">${x("Mon compte","My account")}</h1>
+  <p class="m-lede">${x("Votre compte est géré par Shopify, notre service de paiement sécurisé. Saisissez votre adresse e-mail : vous recevez un code à 6 chiffres pour vous connecter, sans mot de passe.","Your account is managed by Shopify, our secure payment provider. Enter your email address: you receive a 6-digit code to sign in, with no password.")}</p></div>
+  <div class="cta" style="margin:8px 0 18px"><a class="btn" href="${SHOP_ACCOUNT}">${x("Se connecter ou créer un compte","Sign in or create an account")}</a></div>
+  <p class="help" style="color:var(--ink-soft);max-width:40rem;margin-bottom:clamp(40px,5vw,64px)">${x("Vous y retrouvez vos commandes, leur suivi et vos adresses. Un compte est créé automatiquement à votre première commande.","There you will find your orders, their tracking and your addresses. An account is created automatically with your first order.")}</p></div>`});
 V.nf=()=>({title:"404 — Emile Garçon", html:`<div class="wrap"><div class="page-head"><span class="eyebrow">404</span><h1 tabindex="-1">${x("Cette page n’existe pas","This page doesn’t exist")}</h1><p><a class="link" href="#/collection">${x("Voir les pièces","See the pieces")}</a></p></div></div>`});
 
 /* ===== Navigation et rendu ===== */
@@ -1793,8 +1763,8 @@ document.addEventListener("click",e=>{
   if("close" in d){ closeAll(); return; }
   if("closeLink" in d){ closeAll(); return; }
   if(b.id==="checkout"){ goCheckout(); return; }
-  if("account" in d){ e.preventDefault(); location.hash="#/compte"+(ACC?"":"?mode=connexion"); return; }
-  if(b.id==="b-account"){ location.hash=ACC?"#/compte":"#/compte?mode=connexion"; return; }
+  if("account" in d){ e.preventDefault(); location.href=SHOP_ACCOUNT; return; }
+  if(b.id==="b-account"){ location.href=SHOP_ACCOUNT; return; }
   if(d.acc==="logout"){ ACC=null; saveAcc(); say(x("Vous êtes déconnecté.","You are signed out.")); location.hash="#/compte?mode=connexion"; render(); return; }
   if(d.acc==="back"){ ACC_PENDING=null; render(); return; }
 });
@@ -1839,7 +1809,14 @@ document.addEventListener("submit",e=>{
     } else { openMail(href); done(false); }
   }
   if(e.target.id==="nl"){ e.preventDefault(); const v=document.getElementById("nl-email").value.trim();
-    document.getElementById("nl-msg").textContent=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)?x("Inscription enregistrée.","You’re subscribed."):x("Indiquez une adresse e-mail valide.","Enter a valid email address."); }
+    const msgEl=document.getElementById("nl-msg");
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)){ msgEl.textContent=x("Indiquez une adresse e-mail valide.","Enter a valid email address."); return; }
+    const subj=x("Inscription — nouvelles pièces","Sign-up — new pieces"), mail=`mailto:${STUDIO_MAIL}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(x("Je souhaite recevoir les nouvelles pièces : ","Please send me the new pieces: ")+v)}`;
+    if(FORM_KEY){ msgEl.textContent=x("Envoi…","Sending…");
+      fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({access_key:FORM_KEY,subject:subj,from_name:"Site Emile Garçon",email:v,replyto:v,message:x("Inscription à la lettre des nouvelles pièces : ","Sign-up to the new pieces letter: ")+v})})
+        .then(r=>r.json()).then(j=>{ msgEl.textContent=j&&j.success?x("Merci, c’est noté. Vous recevrez les nouvelles pièces en avant-première.","Thank you, noted. You will receive new pieces first."):x("L’envoi n’a pas abouti, réessayez dans un instant.","Sending failed, please try again shortly."); })
+        .catch(()=>{ msgEl.textContent=x("L’envoi n’a pas abouti, réessayez dans un instant.","Sending failed, please try again shortly."); });
+    } else { openMail(mail); msgEl.textContent=x("Votre messagerie s’ouvre : envoyez le message pour confirmer l’inscription.","Your email app is opening: send the message to confirm."); } }
 });
 document.getElementById("b-cart").addEventListener("click",()=>open("cart"));
 document.getElementById("b-search").addEventListener("click",()=>open("search"));
