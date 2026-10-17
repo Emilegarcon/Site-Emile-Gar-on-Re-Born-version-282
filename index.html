@@ -370,6 +370,10 @@ section.m-places{background-image:linear-gradient(rgba(19,17,16,.70),rgba(19,17,
 /* Maison : espacement resserré entre les parties */
 section.m-story,section.m-values,section.m-places{padding-top:clamp(28px,3.2vw,44px)!important;padding-bottom:clamp(28px,3.2vw,44px)!important}
 section.m-story.m-first{padding-top:clamp(8px,1.5vw,20px)!important}
+/* Couture : espacement resserré entre les parties */
+section.c-hero{padding-bottom:clamp(28px,3.2vw,44px)!important}
+section.cp-sec{padding-top:clamp(28px,3.2vw,44px)!important;padding-bottom:clamp(28px,3.2vw,44px)!important}
+@media (max-width:900px){section.c-hero .wrap>:last-child{margin-bottom:0!important}}
 .vals.vals-3{grid-template-columns:repeat(3,1fr)}@media (max-width:900px){.vals.vals-3{grid-template-columns:1fr}}
 .vals{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,40px)}
 .vals li{border-top:1px solid var(--ink);padding-top:18px}
@@ -1402,7 +1406,7 @@ V.couture=()=>{
       <div class="cta"><a class="btn" href="#/showroom?objet=couture">${x("Demander un rendez-vous","Request an appointment")}</a><button type="button" class="btn ghost" data-goto="creations">${x("Voir les créations","See the creations")}</button></div></div>
     <div class="hero-visual"><figure class="frame"><img src="${IMG.CT_NOIR1_2}" alt="${L(findC("manteau-en-cachemire-noir").ext[0].alt)}"><figcaption>${findC("manteau-en-cachemire-noir").name} — ${L(findC("manteau-en-cachemire-noir").sous)}</figcaption></figure></div>
   </div></section>
-  <section style="padding-top:clamp(40px,5vw,64px);border-top:1px solid var(--line)"><div class="wrap">
+  <section class="cp-sec" style="padding-top:clamp(40px,5vw,64px);border-top:1px solid var(--line)"><div class="wrap">
     ${head(x("La différence Couture","What makes Couture"),x("Trois exigences de plus","Three further standards"),x("Ce qui sépare une création Couture d’une pièce de la collection.","What sets a Couture creation apart from a collection piece."))}
     <div class="index" style="grid-template-columns:repeat(3,1fr)">
       <div><span class="num">01</span><h3>${x("Cachemire intégral","Full cashmere")}</h3><p style="color:var(--ink-soft);font-size:15px">${x("Le manteau est entièrement en cachemire.","The coat is made entirely of cashmere.")}</p></div>
@@ -1410,7 +1414,7 @@ V.couture=()=>{
       <div><span class="num">03</span><h3>${x("Doublure intégrale","Full lining")}</h3><p style="color:var(--ink-soft);font-size:15px">${x("Des foulards vintage à l’intérieur du manteau, des poches et des manches : plusieurs jours de travail pour la seule doublure.","Vintage scarves inside the coat, the pockets and the sleeves: several days of work for the lining alone.")}</p></div>
     </div>
   </div></section>
-  <section id="creations" tabindex="-1" style="border-top:1px solid var(--line);padding-top:clamp(40px,5vw,64px)"><div class="wrap">
+  <section id="creations" class="cp-sec" tabindex="-1" style="border-top:1px solid var(--line);padding-top:clamp(40px,5vw,64px)"><div class="wrap">
     ${head(x("Les créations","The creations"),x("Pièces d’exception","Exceptional pieces"),x("Chaque création existe en un seul exemplaire. Elle peut s’acheter en ligne ou se découvrir au showroom, sur rendez-vous.","Each creation exists only once. It can be bought online or discovered at the showroom, by appointment."))}
     <div class="product-grid grid3">${C.map(ccard).join("")}</div>
     <div class="cta" style="justify-content:center;margin-top:clamp(40px,5vw,64px)"><a class="btn" href="#/showroom?objet=couture">${x("Demander un rendez-vous Couture","Request a Couture appointment")}</a></div>
