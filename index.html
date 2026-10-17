@@ -1267,13 +1267,6 @@ V.reborn=()=>{
       <div class="reborn-cols prose">
         <p>${x("Chaque pièce est brodée à la main par les artisanes de l’atelier de Tunis. La broderie s’applique sur le vêtement déjà transformé, à l’endroit où elle en change la lecture : une composition florale sur une épaule, un col et des parements rehaussés de perles, un fil de couleur qui reprend, le long d’une poche, la teinte d’un foulard.","Every piece is embroidered by hand by the craftswomen of the Tunis workshop. The embroidery is applied to the already transformed garment, where it changes how the piece reads: a floral composition on a shoulder, a collar and cuffs picked out with beads, a coloured thread running along a pocket in the shade of a scarf.")}</p>
         <p>${x("Elle demande du temps, de la précision et un regard. Elle dialogue avec la coupe d’origine et avec le motif du foulard, et c’est elle qui fait de chaque vêtement un exemplaire unique. Elle garde la trace des mains qui l’ont faite.","It takes time, precision and an eye. It converses with the original cut and with the scarf’s pattern, and it is what makes each garment one of a kind. It keeps the trace of the hands that made it.")}</p></div></div></div></div>
-    <section class="reborn-word"><div class="wrap"><span class="eyebrow">${x("Le regard du créateur","The designer’s eye")}</span>
-      <figure class="reborn-quote"><blockquote lang="${LANG}">
-        <p>${x("J’ai appris à regarder dans l’espace. L’architecture d’intérieur m’a donné la lumière, les volumes, le temps qui patine les matières. Le design d’objets m’a donné la main : un poids, un assemblage juste, un détail qui se révèle à l’usage.","I learned to see through space. Interior architecture gave me light, volume, the time that softens materials. Object design gave me the hand: a weight, a true joint, a detail that reveals itself in use.")}</p>
-        <p>${x("Le vêtement est venu ensuite, comme une pièce de plus à habiter. Je le dessine comme un plan ; sa doublure est un intérieur, le foulard une fenêtre ouverte sur une autre histoire.","Clothing came after, like one more room to inhabit. I draw it as a plan: its lining is an interior, the scarf a window onto another story.")}</p>
-        <p>${x("Je ne coupe aucun tissu neuf. Ce qui a déjà vécu me suffit : je le prolonge.","I cut no new cloth. What has already lived is enough: I carry it on.")}</p>
-        <p>${x("Entre la Tunisie, où je vis aussi, et Paris, chaque pièce dit la même chose : faire peu, faire durer, garder la trace des mains.","Between Tunisia, where I also live, and Paris, every piece says the same thing: make little, make it last, keep the trace of the hands.")}</p>
-      </blockquote><figcaption>— Emile Garçon</figcaption></figure></div></section>
     <section class="geste" style="padding-bottom:clamp(40px,5vw,64px);padding-top:clamp(48px,6vw,72px)"><div class="wrap">
       <ol class="steps five">${steps.map((s,i)=>`<li class="step"><div class="step-media">${s[2]?`<img src="${s[2]}" alt="" loading="lazy">`:""}</div><div class="step-body"><span class="num">${String(i+1).padStart(2,"0")}</span><h3>${s[0]}</h3><p>${s[1]}</p>${s[3]?`<span class="place">${s[3]}</span>`:""}</div></li>`).join("")}</ol>
     </div></section>
@@ -1281,7 +1274,14 @@ V.reborn=()=>{
       <div class="diptych">
         <figure class="frame"><img src="${IMG.IMG_AVANT}" alt="${x("Foulards vintage chinés, paisley et rayures, posés sur la table de l’atelier","Found vintage scarves, paisley and stripes, laid out on the workshop table")}" loading="lazy"><figcaption>${x("Avant","Before")} — ${x("foulards vintage chinés","found vintage scarves")}</figcaption></figure>
         <figure class="frame"><img src="${IMG.IMG_APRES}" alt="${x("Chemise portée assis : devant taillé dans le foulard rayé, poignets dans le foulard paisley, manches et col noirs","Shirt worn seated: front cut from the striped scarf, cuffs from the paisley scarf, black sleeves and collar")}" loading="lazy"><figcaption>${x("Après","After")} — ${x("la chemise terminée","the finished shirt")}</figcaption></figure>
-      </div></div></section>`};
+      </div></div></section>
+    <section class="reborn-word"><div class="wrap"><span class="eyebrow">${x("Le regard du créateur","The designer’s eye")}</span>
+      <figure class="reborn-quote"><blockquote lang="${LANG}">
+        <p>${x("J’ai appris à regarder dans l’espace. L’architecture d’intérieur m’a donné la lumière, les volumes, le temps qui patine les matières. Le design d’objets m’a donné la main : un poids, un assemblage juste, un détail qui se révèle à l’usage.","I learned to see through space. Interior architecture gave me light, volume, the time that softens materials. Object design gave me the hand: a weight, a true joint, a detail that reveals itself in use.")}</p>
+        <p>${x("Le vêtement est venu ensuite, comme une pièce de plus à habiter. Je le dessine comme un plan ; sa doublure est un intérieur, le foulard une fenêtre ouverte sur une autre histoire.","Clothing came after, like one more room to inhabit. I draw it as a plan: its lining is an interior, the scarf a window onto another story.")}</p>
+        <p>${x("Je ne coupe aucun tissu neuf. Ce qui a déjà vécu me suffit : je le prolonge.","I cut no new cloth. What has already lived is enough: I carry it on.")}</p>
+        <p>${x("Entre la Tunisie, où je vis aussi, et Paris, chaque pièce dit la même chose : faire peu, faire durer, garder la trace des mains.","Between Tunisia, where I also live, and Paris, every piece says the same thing: make little, make it last, keep the trace of the hands.")}</p>
+      </blockquote><figcaption>— Emile Garçon</figcaption></figure></div></section>`};
 };
 
 V.maison=(sec)=>({title:x("La Maison Garçon","The Garçon House")+" — Emile Garçon", html:`<div class="wrap">
