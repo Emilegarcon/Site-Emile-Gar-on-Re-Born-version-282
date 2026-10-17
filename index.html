@@ -588,8 +588,20 @@ details div{padding:0 0 18px;color:var(--ink-soft);font-size:15px}
 @media (max-width:520px){.index{grid-template-columns:1fr}}
 .address{font-family:var(--display);font-size:clamp(32px,4.4vw,54px);line-height:1.05;font-weight:500}
 .form{display:grid;gap:18px;max-width:34rem}
-.form label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
+.form label{display:block;font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
 .form input,.form select,.form textarea{width:100%;background:var(--bg-elevated);border:1px solid var(--line-strong);padding:13px 14px;border-radius:0;min-height:48px}
+.pick{border:0;padding:0;margin:0;min-width:0}
+.pick legend{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px;padding:0}
+.pick-n{text-transform:none;letter-spacing:0;color:var(--stone)}
+.pick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px;max-height:340px;overflow-y:auto;padding:2px;border:1px solid var(--line-strong);background:var(--bg-elevated)}
+.form .pick-it,.pick-it{position:relative;display:flex!important;flex-direction:column;gap:4px;cursor:pointer;padding:4px;border:1px solid transparent;font-family:var(--body)!important;text-transform:none!important;letter-spacing:0!important;margin:0!important}
+.pick-it input{position:absolute;opacity:0;width:1px;height:1px}
+.pick-ph{aspect-ratio:3/4;background:var(--bg-sunken);display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:12px;color:var(--ink-soft)}
+.pick-ph img{width:100%;height:100%;object-fit:cover}
+.pick-t{font-size:12.5px;line-height:1.25;color:var(--ink)}
+.pick-s{font-family:var(--mono);font-size:10.5px;color:var(--stone)}
+.pick-it:has(input:checked){border-color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+.pick-it:has(input:focus-visible){outline:2px solid var(--gold);outline-offset:1px}
 .form .help{font-size:13px;color:var(--stone);margin-top:6px}
 .form [aria-invalid="true"]{border-color:var(--ember)}
 .err{color:var(--ember);font-size:13px;margin-top:6px}
@@ -991,6 +1003,8 @@ const slug = s => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,""
 /* Anciennes adresses de fiches, redirigées comme dans Shopify */
 function openMail(href){ const framed=(()=>{try{return window.top!==window.self}catch(e){return true}})(); try{ if(framed){ const w=window.open(href,"_blank","noopener"); return !!w; } window.location.href=href; return true; }catch(e){ return false; } }
 const STUDIO_MAIL = "studiogarcon@gmail.com";
+/* Clé d’accès Web3Forms (gratuit) : si renseignée, le formulaire de rendez-vous envoie directement la demande par e-mail au studio. */
+const FORM_KEY = "";
 const HANDLE_ALIAS = {"manteau-emile":"chemise-emile"};
 const find = h => P.find(p=>p.h===h) || (typeof C!=="undefined" ? C.find(c=>c.h===h) : undefined);
 const buyable = p => p.etat==="dispo"||p.etat==="showroom";
@@ -1387,10 +1401,15 @@ V.gv=(q)=>{ const pre=q.get("piece")||"", obj=q.get("objet")||"essayage", sr=P.f
         <div><label for="r-e">E-mail</label><input id="r-e" type="email" autocomplete="email" aria-describedby="e-e"><p class="err" id="e-e" hidden>${x("Indiquez une adresse e-mail valide, par exemple nom@domaine.fr.","Enter a valid email address, e.g. name@domain.com.")}</p></div>
         <div><label for="r-o">${x("Objet","Subject")}</label><select id="r-o">${[["essayage",x("Essayer une pièce","Try on a piece")],["couture",x("Découvrir la collection Couture","Discover the Couture collection")],["prix",x("Demander un prix Couture","Ask for a Couture price")]].map(([v,l])=>`<option value="${v}" ${v===obj?"selected":""}>${l}</option>`).join("")}</select></div>
         <div><label for="r-d">${x("Date souhaitée","Preferred date")}</label><input id="r-d" type="date"></div>
-        <div><label for="r-p">${x("Pièce à essayer","Piece to try on")}</label><select id="r-p"><option value="">${x("Aucune en particulier","None in particular")}</option><optgroup label="${x("Collection","Collection")}">${P.filter(buyable).map(p=>`<option value="${p.h}" ${p.h===pre?"selected":""}>${title(p)}</option>`).join("")}</optgroup><optgroup label="Couture">${C.filter(c=>c.status==="ACTIVE"||c.h===pre).map(c=>`<option value="${c.h}" ${c.h===pre?"selected":""}>${c.name}</option>`).join("")}</optgroup></select><p class="help">${x("Si la pièce est en ligne, elle sera mise de côté 48 heures après confirmation.","If the piece is online, it will be held for 48 hours once confirmed.")}</p></div>
+        <fieldset class="pick"><legend>${x("Pièce à essayer","Piece to try on")} <span class="pick-n">${x("facultatif","optional")}</span></legend>
+          <div class="pick-grid">
+            <label class="pick-it pick-none"><input type="radio" name="r-pk" value="" ${pre?"":"checked"}><span class="pick-ph">${x("Aucune","None")}</span><span class="pick-t">${x("Pas de pièce en particulier","No particular piece")}</span></label>
+            ${[...P.filter(buyable),...C.filter(c=>c.status==="ACTIVE"||c.h===pre)].map(p=>{const ph=photos(p)[0];return `<label class="pick-it"><input type="radio" name="r-pk" value="${p.h}" ${p.h===pre?"checked":""}><span class="pick-ph">${ph?`<img src="${IMG[ph.k]}" alt="" loading="lazy">`:""}</span><span class="pick-t">${p.couture?p.name:p.t}</span><span class="pick-s">${p.couture?"Couture":(t=>t?x(t[0],t[1]):p.type)({Manteaux:["Manteau","Coat"],Vestes:["Veste","Jacket"],Chemises:["Chemise","Shirt"],"Étoles":["Étole","Stole"]}[p.type])} · ${p.taille||""}</span></label>`}).join("")}
+          </div>
+          <p class="help">${x("Si la pièce est en ligne, elle sera mise de côté 48 heures après confirmation.","If the piece is online, it will be held for 48 hours once confirmed.")}</p></fieldset>
         <div><label for="r-m">Message</label><textarea id="r-m" rows="3"></textarea></div>
-        <button class="btn" type="submit">${x("Envoyer la demande","Send request")}</button>
-        <p class="help">${x("La demande s’ouvre dans votre messagerie, adressée à","The request opens in your email app, addressed to")} <a href="mailto:${STUDIO_MAIL}">${STUDIO_MAIL}</a>.</p>
+        <button class="btn" type="submit">${x("Demander mon rendez-vous","Request my appointment")}</button>
+        <p class="help">${FORM_KEY?x("Nous vous répondons par e-mail pour confirmer le créneau.","We reply by email to confirm the time."):x("La demande s’ouvre dans votre messagerie, adressée à","The request opens in your email app, addressed to")+` <a href="mailto:${STUDIO_MAIL}">${STUDIO_MAIL}</a>.`}</p>
       </form></div>
   </div></div>
   <section style="border-top:1px solid var(--line);padding-bottom:clamp(40px,5vw,64px)"><div class="wrap"><div class="bm-intro"><img class="bm-logo" src="${IMG.IMG_BM_LOGO}" alt="Le Bon Marché Rive Gauche" width="120" height="135"><div class="bm-body">${head(x("Ailleurs à Paris","Elsewhere in Paris"),x("Rendez-vous au Bon Marché Rive Gauche","Meet us at Le Bon Marché Rive Gauche"),x("Le temps d’une présentation, la Maison s’installe régulièrement au Bon Marché Rive Gauche. Venez y découvrir une sélection de pièces, toucher les matières, essayer. Les prochaines dates sont annoncées dans la lettre de la Maison.","From time to time, the House takes up residence at Le Bon Marché Rive Gauche for a presentation. Come and discover a selection of pieces, feel the materials, try them on. Upcoming dates are announced in the House letter."),`<button type="button" class="link" data-goto="nl-t">${x("Être prévenu des prochaines dates","Hear about the next dates")}</button>`)}<figure class="frame gv-photo bm-photo"><img src="${IMG.IMG_BM_PHOTO}" alt="${x("L’atrium du Bon Marché Rive Gauche : verrière, balcons en fer forgé et escaliers mécaniques croisés","The Bon Marché Rive Gauche atrium: glass roof, wrought-iron balconies and crossing escalators")}" loading="lazy"><figcaption>${x("Le Bon Marché Rive Gauche, Paris 7e","Le Bon Marché Rive Gauche, Paris 7th")}</figcaption></figure></div></div></div></section>`};
@@ -1802,7 +1821,7 @@ document.addEventListener("submit",e=>{
     const okN=n.value.trim().length>0, okE=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m.value.trim());
     n.setAttribute("aria-invalid",!okN); m.setAttribute("aria-invalid",!okE); document.getElementById("e-n").hidden=okN; document.getElementById("e-e").hidden=okE;
     if(!okN){n.focus();return;} if(!okE){m.focus();return;}
-    const pv=document.getElementById("r-p").value, p=find(pv), cc=findC(pv), ob=document.getElementById("r-o").value;
+    const pv=(document.querySelector('input[name="r-pk"]:checked')||{}).value||"", p=find(pv), cc=findC(pv), ob=document.getElementById("r-o").value;
     /* Envoi : ouvre la messagerie du visiteur avec un e-mail prérempli adressé au studio */
     const obL=document.getElementById("r-o").selectedOptions[0].textContent, dt=document.getElementById("r-d").value, msg=document.getElementById("r-m").value.trim();
     const pieceL=p?title(p):(cc?cc.name:x("Aucune en particulier","None in particular"));
@@ -1810,9 +1829,15 @@ document.addEventListener("submit",e=>{
     const sep=LANG==="en"?": ":" : ", dtL=dt?new Date(dt+"T12:00").toLocaleDateString(LANG==="en"?"en-GB":"fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"}):x("non précisée","not specified");
     const body=[`${x("Nom","Name")}${sep}${n.value.trim()}`,`E-mail${sep}${m.value.trim()}`,`${x("Objet","Subject")}${sep}${obL}`,`${x("Date souhaitée","Preferred date")}${sep}${dtL}`,`${x("Pièce","Piece")}${sep}${pieceL}`,"",msg].join("\n");
     const href=`mailto:${STUDIO_MAIL}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
-    openMail(href);
-    document.getElementById("rdv").innerHTML=`<div class="ok" role="status" tabindex="-1" id="rdv-ok"><h2>${x("Votre messagerie s’ouvre","Your email app is opening")}</h2><p>${x("Votre demande est préremplie : il ne vous reste qu’à l’envoyer. Nous vous répondrons par e-mail pour confirmer un créneau.","Your request is pre-filled: just send it. We will reply by email to confirm a time.")}${p?x(` Après confirmation, ${title(p)} sera mise de côté 48 heures.`,` Once confirmed, ${title(p)} will be held for 48 hours.`):""}${cc||ob!=="essayage"?x(" La présentation Couture se fait en privé, au 15 Galerie Vivienne."," The Couture viewing is private, at 15 Galerie Vivienne."):""}</p><p>${x("Rien ne s’est ouvert ?","Nothing opened?")} <a class="link" href="${href}">${x("Écrire à","Write to")} ${STUDIO_MAIL}</a></p></div>`;
-    document.getElementById("rdv-ok").focus(); }
+    const done=(sent)=>{ document.getElementById("rdv").innerHTML=`<div class="ok" role="status" tabindex="-1" id="rdv-ok"><h2>${sent?x("Demande envoyée","Request sent"):x("Votre messagerie s’ouvre","Your email app is opening")}</h2><p>${sent?x("Merci. Nous vous répondons par e-mail pour confirmer un créneau.","Thank you. We will reply by email to confirm a time."):x("Votre demande est préremplie : il ne vous reste qu’à l’envoyer. Nous vous répondrons par e-mail pour confirmer un créneau.","Your request is pre-filled: just send it. We will reply by email to confirm a time.")}${p?x(` Après confirmation, ${title(p)} sera mise de côté 48 heures.`,` Once confirmed, ${title(p)} will be held for 48 hours.`):""}${cc||ob!=="essayage"?x(" La présentation Couture se fait en privé, au 15 Galerie Vivienne."," The Couture viewing is private, at 15 Galerie Vivienne."):""}</p><p>${x("Rien ne s’est ouvert ?","Nothing opened?")} <a class="link" href="${href}">${x("Écrire à","Write to")} ${STUDIO_MAIL}</a></p></div>`;
+    document.getElementById("rdv-ok").focus(); };
+    if(FORM_KEY){
+      const btn=e.target.querySelector('button[type="submit"]'); btn.disabled=true; btn.textContent=x("Envoi…","Sending…");
+      fetch("https://api.web3forms.com/submit",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({access_key:FORM_KEY,subject:subj,from_name:"Site Emile Garçon",name:n.value.trim(),email:m.value.trim(),replyto:m.value.trim(),message:body})})
+        .then(r=>r.json()).then(j=>{ if(j&&j.success) done(true); else { openMail(href); done(false); } })
+        .catch(()=>{ openMail(href); done(false); });
+    } else { openMail(href); done(false); }
+  }
   if(e.target.id==="nl"){ e.preventDefault(); const v=document.getElementById("nl-email").value.trim();
     document.getElementById("nl-msg").textContent=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)?x("Inscription enregistrée.","You’re subscribed."):x("Indiquez une adresse e-mail valide.","Enter a valid email address."); }
 });
