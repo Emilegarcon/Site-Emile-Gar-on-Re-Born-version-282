@@ -1208,12 +1208,15 @@ V.home=()=>{
 V.pieces=(q)=>{
   const cat=(c=>HIDDEN_TYPES.includes(c)||!(c==="all"||CATS.includes(c)||c==="Chemises")?"all":c)(q.get("cat")||"all"), st=q.get("etat")||"visible";
   const f=["motif","mat","tech"].map(k=>[k,q.get(k)]).filter(a=>a[1]);
+  const tl=q.get("taille")||"";
+  const SIZES=["XS","S","M","L","XL","XXL"].filter(z=>P.some(p=>p.etat!=="vendue"&&(p.taille||"").split("/").includes(z)));
   const list=P.filter(p=>{
     if(cat!=="all"&&catOf(p)!==cat&&p.type!==cat) return false;
     if(st==="visible"&&p.etat==="vendue") return false;
     if(st==="dispo"&&!buyable(p)) return false;
     if(st==="showroom"&&!buyable(p)) return false;
     if(st==="vendue"&&p.etat!=="vendue") return false;
+    if(tl&&!(p.taille||"").split("/").includes(tl)) return false;
     for(const [k,v] of f){ const vals=k==="motif"?(p.motif?[p.motif]:[]):p[k]; if(!vals.some(s=>slug(s)===v)) return false; }
     return true;
   });
@@ -1226,6 +1229,7 @@ V.pieces=(q)=>{
       <div class="chips" role="group" aria-label="${x("Catégorie","Category")}">${["all",...CATS].filter(c=>!HIDDEN_TYPES.includes(c)).map(c=>`<button type="button" data-cat="${c}" aria-pressed="${c===cat}">${c==="all"?x("Toutes","All"):x(CAT[c][0],CAT[c][1])}</button>`).join("")}</div>
       <div class="sel"><label for="f-st">${x("Disponibilité","Availability")}</label><select id="f-st">
         ${[["visible",x("Toutes, hors vendues","All, excluding sold")],["dispo",x("Achetables en ligne","Buy online")],["showroom",x("Au showroom","At the showroom")],["vendue",x("Vendues (archive)","Sold (archive)")]].map(([v,l])=>`<option value="${v}" ${v===st?"selected":""}>${l}</option>`).join("")}</select></div>
+      <div class="sel"><label for="f-taille">${x("Taille","Size")}</label><select id="f-taille"><option value="">${x("Toutes les tailles","All sizes")}</option>${SIZES.map(z=>`<option value="${z}" ${z===tl?"selected":""}>${z}</option>`).join("")}</select></div>
       ${f.map(([k,v])=>`<button type="button" class="chip" data-unset="${k}" aria-label="${x("Retirer le filtre","Remove filter")} ${fname(k,v)}">${fname(k,v)} <span aria-hidden="true">✕</span></button>`).join("")}
     </div>
   </div>
@@ -1775,7 +1779,7 @@ document.addEventListener("click",e=>{
   if(d.acc==="logout"){ ACC=null; saveAcc(); say(x("Vous êtes déconnecté.","You are signed out.")); location.hash="#/compte?mode=connexion"; render(); return; }
   if(d.acc==="back"){ ACC_PENDING=null; render(); return; }
 });
-document.addEventListener("change",e=>{ if(e.target.id==="f-st") setQ({etat:e.target.value==="visible"?null:e.target.value}); });
+document.addEventListener("change",e=>{ if(e.target.id==="f-st") setQ({etat:e.target.value==="visible"?null:e.target.value}); if(e.target.id==="f-taille") setQ({taille:e.target.value||null}); });
 document.addEventListener("input",e=>{ const t=e.target; if(!t.closest("#f-acc,#f-code")) return;
   const err=t.getAttribute("aria-describedby")&&document.getElementById(t.getAttribute("aria-describedby").split(" ")[0]); if(!err) return;
   const ok=t.type==="email"?/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(t.value.trim()):t.id==="a-code"?/^\d{6}$/.test(t.value.trim()):t.value.trim().length>0;
