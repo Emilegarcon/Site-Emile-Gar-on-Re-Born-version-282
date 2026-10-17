@@ -367,6 +367,9 @@ section.film{background-image:linear-gradient(rgba(19,17,16,.70),rgba(19,17,16,.
 section.geste:not(.rb-steps){background-image:linear-gradient(rgba(19,17,16,.70),rgba(19,17,16,.70)),url(img/TEX_FILS.webp)!important}
 section.rb-avant{background-image:linear-gradient(rgba(19,17,16,.70),rgba(19,17,16,.70)),url(img/TEX_FRIPERIE.webp)!important;background-size:cover!important;background-position:center 60%!important}
 section.m-places{background-image:linear-gradient(rgba(19,17,16,.70),rgba(19,17,16,.70)),url(img/TEX_TAPIS.webp)!important;background-size:cover!important;background-position:center!important}
+/* Maison : espacement resserré entre les parties */
+section.m-story,section.m-values,section.m-places{padding-top:clamp(28px,3.2vw,44px)!important;padding-bottom:clamp(28px,3.2vw,44px)!important}
+section.m-story.m-first{padding-top:clamp(8px,1.5vw,20px)!important}
 .vals.vals-3{grid-template-columns:repeat(3,1fr)}@media (max-width:900px){.vals.vals-3{grid-template-columns:1fr}}
 .vals{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,40px)}
 .vals li{border-top:1px solid var(--ink);padding-top:18px}
