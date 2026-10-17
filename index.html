@@ -376,6 +376,9 @@ section.cp-sec{padding-top:clamp(28px,3.2vw,44px)!important;padding-bottom:clamp
 header.site,body>footer,footer{background-image:linear-gradient(rgba(19,17,16,.80),rgba(19,17,16,.80)),url(img/TEX_ROULEAUX.webp)!important;background-size:cover!important;background-position:center!important}
 .h-oeuvre .head p,section.geste:not(.rb-steps) .head p{max-width:none}@media (min-width:1200px){.h-oeuvre .head p,section.geste:not(.rb-steps) .head p{white-space:normal}}
 br.br-d{display:none}@media (min-width:1200px){.m-lede.lede-wide{max-width:none!important}br.br-d{display:inline}}
+.menu-toggle.icon-btn{border:1px solid var(--gold);padding:0 12px 0 10px;height:38px;gap:8px;background:color-mix(in srgb,var(--bg) 70%,transparent)}
+.menu-toggle svg{width:18px;height:18px;stroke-width:1.8}
+.menu-lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase}
 .vals.vals-3{grid-template-columns:repeat(3,1fr)}@media (max-width:900px){.vals.vals-3{grid-template-columns:1fr}}
 .vals{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,40px)}
 .vals li{border-top:1px solid var(--ink);padding-top:18px}
@@ -733,7 +736,7 @@ footer{padding:clamp(48px,7vw,72px) 0 28px}
       <button class="icon-btn" id="b-search" type="button"><span class="sr" data-t="search">Rechercher</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
       <button class="icon-btn" id="b-account" type="button"><span class="sr" data-t="account">Compte</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></button>
       <button class="icon-btn" id="b-cart" type="button" aria-haspopup="dialog"><span class="sr" id="cart-label">Panier</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="cart-count" id="cart-count" aria-hidden="true">0</span></button>
-      <button class="icon-btn menu-toggle" id="b-menu" type="button" aria-expanded="false" aria-controls="menu"><span class="sr" data-t="menu">Menu</span><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/></svg></button>
+      <button class="icon-btn menu-toggle" id="b-menu" type="button" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg><span class="menu-lbl" data-t="menu">Menu</span></button>
     </div>
   </div>
 </header>
