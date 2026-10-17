@@ -647,6 +647,7 @@ nav.primary{align-items:baseline}
 .newsletter{background:var(--bg-elevated);border-top:1px solid var(--line);padding:clamp(48px,7vw,80px) 0}
 .newsletter .wrap{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
 .newsletter h2{font-size:clamp(22px,2.6vw,30px);max-width:22ch}
+.nl-sub{margin:10px 0 0;color:var(--ink-soft);font-size:16px}
 .nl-form{display:flex;border:1px solid var(--line-strong);min-width:300px;flex:0 1 440px}
 .nl-form input{flex:1;min-width:0;border:0;background:transparent;padding:14px 16px;font-size:14px}
 .nl-form input:focus-visible{outline:none}
@@ -746,7 +747,7 @@ footer{padding:clamp(48px,7vw,72px) 0 28px}
 
 <section class="newsletter" aria-labelledby="nl-t">
   <div class="wrap">
-    <h2 id="nl-t" tabindex="-1" data-t="nl.h">Recevez les nouvelles pièces avant tout le monde.</h2>
+    <div class="nl-txt"><h2 id="nl-t" tabindex="-1" data-t="nl.h">Chaque pièce n’existe qu’une fois.</h2><p class="nl-sub" data-t="nl.s">Soyez prévenu avant sa mise en ligne.</p></div>
     <form class="nl-form" id="nl" novalidate>
       <label class="sr" for="nl-email" data-t="email">Adresse e-mail</label>
       <input id="nl-email" type="email" autocomplete="email" data-tp="email.ph" placeholder="Votre adresse e-mail">
@@ -800,7 +801,7 @@ const UI = {
   proto:["Prototype de validation. Produits et prix issus de votre Shopify ; stocks simulés ; photos associées provisoirement ; les passages soulignés d’or sont à fournir.","Validation prototype. Products and prices from your Shopify; stock simulated; photo matching provisional; gold-underlined text still to be supplied."],
   hide:["Masquer","Hide"], search:["Rechercher","Search"], account:["Compte","Account"], menu:["Menu","Menu"], close:["Fermer","Close"], cart:["Panier","Bag"],
   "search.l":["Rechercher une pièce, une matière, un motif","Search a piece, a material, a motif"], "search.ph":["Manteau, soie, botanique…","Coat, silk, botanical…"],
-  "nl.h":["Recevez les nouvelles pièces avant tout le monde.","Hear about new pieces before anyone else."], "nl.b":["S’inscrire","Subscribe"],
+  "nl.h":["Chaque pièce n’existe qu’une fois.","Each piece exists only once."], "nl.s":["Soyez prévenu avant sa mise en ligne.","Be told before it goes online."], "nl.b":["S’inscrire","Subscribe"],
   email:["Adresse e-mail","Email address"], "email.ph":["Votre adresse e-mail","Your email address"],
   "foot.p":["Pièces uniques pour homme, créées à partir de vêtements chinés et de foulards vintage. Showroom au 15 Galerie Vivienne, Paris.","One-of-a-kind menswear made from found garments and vintage silk scarves. Showroom at 15 Galerie Vivienne, Paris."],
   "foot.maison":["La Maison","The House"], "foot.service":["Service","Service"], "foot.else":["Ailleurs","Elsewhere"],
