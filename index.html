@@ -1231,14 +1231,14 @@ V.pieces=(q)=>{
   const cat=(c=>HIDDEN_TYPES.includes(c)||!(c==="all"||CATS.includes(c)||c==="Chemises")?"all":c)(q.get("cat")||"all"), st=q.get("etat")||"visible";
   const f=["motif","mat","tech"].map(k=>[k,q.get(k)]).filter(a=>a[1]);
   const tl=q.get("taille")||"";
-  const SIZES=["XS","S","M","L","XL","XXL"].filter(z=>P.some(p=>p.etat!=="vendue"&&(p.taille||"").split("/").includes(z)));
+  const SIZES=["S/M","M/L","L/XL"].filter(z=>P.some(p=>p.etat!=="vendue"&&p.taille===z));
   const list=P.filter(p=>{
     if(cat!=="all"&&catOf(p)!==cat&&p.type!==cat) return false;
     if(st==="visible"&&p.etat==="vendue") return false;
     if(st==="dispo"&&!buyable(p)) return false;
     if(st==="showroom"&&!buyable(p)) return false;
     if(st==="vendue"&&p.etat!=="vendue") return false;
-    if(tl&&!(p.taille||"").split("/").includes(tl)) return false;
+    if(tl&&p.taille!==tl) return false;
     for(const [k,v] of f){ const vals=k==="motif"?(p.motif?[p.motif]:[]):p[k]; if(!vals.some(s=>slug(s)===v)) return false; }
     return true;
   });
