@@ -658,7 +658,9 @@ footer{padding:clamp(48px,7vw,72px) 0 28px}
 .foot-col a:hover{color:var(--ink)}
 .foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:22px;font-family:var(--mono);font-size:11px;color:var(--stone)}
 @media (max-width:900px){.foot-grid{grid-template-columns:1fr 1fr}}
-@media (max-width:520px){.foot-grid{grid-template-columns:1fr}.newsletter .wrap{flex-direction:column;align-items:stretch}.nl-form{min-width:0;flex-basis:auto}}
+@media (max-width:520px){.foot-grid{grid-template-columns:1fr}.newsletter .wrap{flex-direction:column;align-items:stretch}.nl-form{min-width:0;flex-basis:auto;max-width:100%}
+.nl-form button{flex:0 0 auto;padding:0 14px}
+@media (max-width:900px){.c-hero .frame{margin-right:14px}}}
 
 /* Panneaux */
 .scrim{position:fixed;inset:0;z-index:70;background:rgba(12,10,8,.45);display:none}
@@ -1265,9 +1267,9 @@ V.piece=(h,q)=>{
         ${act}
         <p class="desc">${L(p.d)}</p>
         <table class="carnet"><caption><span>${x("Détails de la pièce","Piece details")}</span></caption><tbody>
-          <tr><th scope="row">${x("Matières","Materials")}</th><td>${links(p.mat,"mat")}</td></tr>
-          <tr><th scope="row">${x("Gestes","Techniques")}</th><td>${links(p.tech,"tech")}</td></tr>
-          <tr><th scope="row">${x("Motif","Motif")}</th><td>${p.motif?`<a href="#/collection?motif=${slug(p.motif)}">${term(p.motif)}</a>`:tbd("à fournir","to supply")}</td></tr>
+          ${p.mat&&p.mat.length?`<tr><th scope="row">${x("Matières","Materials")}</th><td>${links(p.mat,"mat")}</td></tr>`:""}
+          ${p.tech&&p.tech.length?`<tr><th scope="row">${x("Gestes","Techniques")}</th><td>${links(p.tech,"tech")}</td></tr>`:""}
+          ${p.motif?`<tr><th scope="row">${x("Motif","Motif")}</th><td><a href="#/collection?motif=${slug(p.motif)}">${term(p.motif)}</a></td></tr>`:""}
           <tr><th scope="row">${x("Atelier","Workshop")}</th><td>${x("Tunis et Paris","Tunis and Paris")}</td></tr>
           <tr><th scope="row">${x("Taille","Size")}</th><td>${p.taille?`${x("Taille unique","One size")} ${p.taille}`:(p.etat==="vendue"?"—":sizeTbd())}</td></tr>
           <tr><th scope="row">${x("Où la voir","Where to see it")}</th><td>${where}</td></tr>
