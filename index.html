@@ -360,7 +360,6 @@ section.rb-quote{padding-top:clamp(24px,3vw,32px)!important;padding-bottom:clamp
 /* Accueil : espacement resserré et régulier entre les parties */
 section.hero{padding-bottom:clamp(24px,3vw,44px)!important}
 section.film,section.h-oeuvre,section#collection,section.c-band,section.geste:not(.rb-steps),section.universe{padding-top:clamp(28px,3.2vw,44px)!important;padding-bottom:clamp(28px,3.2vw,44px)!important}
-@media (max-width:900px){section.hero .wrap>:last-child{margin-bottom:0!important}}
 /* Fond foulards (voile 70 %) : film et geste de l’accueil */
 section.film,section.geste:not(.rb-steps){background-image:linear-gradient(rgba(19,17,16,.70),rgba(19,17,16,.70)),url(img/TEX_FOULARDS.webp)!important;background-size:cover!important;background-position:center!important}
 section.film{background-image:linear-gradient(rgba(19,17,16,.70),rgba(19,17,16,.70)),url(img/TEX_FILM.webp)!important}
@@ -373,7 +372,6 @@ section.m-story.m-first{padding-top:clamp(8px,1.5vw,20px)!important}
 /* Couture : espacement resserré entre les parties */
 section.c-hero{padding-bottom:clamp(28px,3.2vw,44px)!important}
 section.cp-sec{padding-top:clamp(28px,3.2vw,44px)!important;padding-bottom:clamp(28px,3.2vw,44px)!important}
-@media (max-width:900px){section.c-hero .wrap>:last-child{margin-bottom:0!important}}
 /* En-tête et pied de page : fond foulards, voile 80 % */
 header.site,body>footer,footer{background-image:linear-gradient(rgba(19,17,16,.80),rgba(19,17,16,.80)),url(img/TEX_ROULEAUX.webp)!important;background-size:cover!important;background-position:center!important}
 .vals.vals-3{grid-template-columns:repeat(3,1fr)}@media (max-width:900px){.vals.vals-3{grid-template-columns:1fr}}
@@ -660,7 +658,8 @@ footer{padding:clamp(48px,7vw,72px) 0 28px}
 @media (max-width:900px){.foot-grid{grid-template-columns:1fr 1fr}}
 @media (max-width:520px){.foot-grid{grid-template-columns:1fr}.newsletter .wrap{flex-direction:column;align-items:stretch}.nl-form{min-width:0;flex-basis:auto;max-width:100%}
 .nl-form button{flex:0 0 auto;padding:0 14px}
-@media (max-width:900px){.c-hero .frame{margin-right:14px}}}
+@media (max-width:900px){section.c-hero{overflow-x:clip}}
+.buy-bar[hidden]{display:none!important}}
 
 /* Panneaux */
 .scrim{position:fixed;inset:0;z-index:70;background:rgba(12,10,8,.45);display:none}
