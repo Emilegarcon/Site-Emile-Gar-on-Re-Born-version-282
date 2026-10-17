@@ -357,6 +357,7 @@ button.link{background:none;border:0;border-bottom:1px solid var(--gold);border-
 section.rb-steps{padding-top:clamp(24px,3vw,36px)!important;padding-bottom:clamp(20px,2.5vw,32px)!important}
 section.rb-avant{padding-top:clamp(16px,2vw,24px)!important;padding-bottom:clamp(20px,2.5vw,28px)!important}
 section.rb-quote{padding-top:clamp(24px,3vw,32px)!important;padding-bottom:clamp(36px,4.5vw,56px)!important}
+.vals.vals-3{grid-template-columns:repeat(3,1fr)}@media (max-width:900px){.vals.vals-3{grid-template-columns:1fr}}
 .vals{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,40px)}
 .vals li{border-top:1px solid var(--ink);padding-top:18px}
 .vals-n{font-family:var(--mono);font-size:11px;color:var(--gold-text)}
@@ -1135,6 +1136,15 @@ V.home=()=>{
         </a>
       </div>
     </figure>
+  </div></section>
+
+  <section class="h-oeuvre" style="padding-top:clamp(36px,4.5vw,56px);padding-bottom:clamp(36px,4.5vw,56px)"><div class="wrap">
+    ${head(x("Pièces uniques","One-of-a-kind pieces"),x("Chaque pièce, <em>une œuvre</em>","Each piece, <em>a work</em>"),x("Un vêtement Emile Garçon se regarde comme une œuvre : il n’existe qu’une fois, il porte la trace des mains qui l’ont fait, et il a un nom.","An Emile Garçon garment is looked at like a work of art: it exists only once, it carries the trace of the hands that made it, and it has a name."))}
+    <ul class="vals vals-3">
+      <li><span class="vals-n">01</span><h3>${x("Un seul exemplaire","A single copy")}</h3><p>${x("Chaque pièce naît d’un vêtement et de foulards qui n’existent qu’une fois. Elle ne sera jamais refaite à l’identique.","Each piece is born from a garment and scarves that exist only once. It will never be made again the same way.")}</p></li>
+      <li><span class="vals-n">02</span><h3>${x("Brodée à la main","Embroidered by hand")}</h3><p>${x("Les brodeuses de l’atelier de Tunis posent sur chaque pièce une broderie faite main, à l’endroit choisi pour elle. Elle en est la signature.","The embroiderers of the Tunis workshop add a hand embroidery to every piece, in the place chosen for it. It is the piece’s signature.")}</p></li>
+      <li><span class="vals-n">03</span><h3>${x("Composée, nommée","Composed, named")}</h3><p>${x("Les foulards sont placés comme les éléments d’un tableau, puis la pièce reçoit un prénom, comme une œuvre reçoit son titre.","The scarves are placed like the elements of a painting, then the piece is given a first name, as a work receives its title.")}</p></li>
+    </ul>
   </div></section>
 
   <section id="collection" class="coll-cream" style="padding-top:clamp(24px,3vw,36px);padding-bottom:clamp(40px,5vw,64px)"><div class="wrap">
