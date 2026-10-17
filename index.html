@@ -349,7 +349,14 @@ button.link{background:none;border:0;border-bottom:1px solid var(--gold);border-
 .m-quote p{font-family:var(--display);font-style:italic;font-size:clamp(20px,2.2vw,28px);line-height:1.45;color:var(--ink)}
 .m-quote figcaption{margin-top:18px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-text)}
 .m-values{background:var(--bg-elevated);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:clamp(40px,5vw,64px) 0}
-.reborn-eco{margin:clamp(48px,6vw,80px) 0 clamp(48px,6vw,80px);text-align:left}
+.reborn-eco{text-align:left}
+/* Page (Re)Born : espacement resserré et régulier entre les parties */
+.reborn-eco{margin:clamp(24px,3vw,32px) 0 0!important}
+.reborn-head .reborn-hand{margin-top:clamp(28px,3.5vw,44px)!important;padding-top:clamp(24px,3vw,36px)!important}
+.reborn-head{padding-bottom:clamp(24px,3vw,36px)!important}
+section.rb-steps{padding-top:clamp(24px,3vw,36px)!important;padding-bottom:clamp(20px,2.5vw,32px)!important}
+section.rb-avant{padding-top:clamp(16px,2vw,24px)!important;padding-bottom:clamp(20px,2.5vw,28px)!important}
+section.rb-quote{padding-top:clamp(24px,3vw,32px)!important;padding-bottom:clamp(36px,4.5vw,56px)!important}
 .vals{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,40px)}
 .vals li{border-top:1px solid var(--ink);padding-top:18px}
 .vals-n{font-family:var(--mono);font-size:11px;color:var(--gold-text)}
@@ -1267,15 +1274,15 @@ V.reborn=()=>{
       <div class="reborn-cols prose">
         <p>${x("Chaque pièce est brodée à la main par les artisanes de l’atelier de Tunis. La broderie s’applique sur le vêtement déjà transformé, à l’endroit où elle en change la lecture : une composition florale sur une épaule, un col et des parements rehaussés de perles, un fil de couleur qui reprend, le long d’une poche, la teinte d’un foulard.","Every piece is embroidered by hand by the craftswomen of the Tunis workshop. The embroidery is applied to the already transformed garment, where it changes how the piece reads: a floral composition on a shoulder, a collar and cuffs picked out with beads, a coloured thread running along a pocket in the shade of a scarf.")}</p>
         <p>${x("Elle demande du temps, de la précision et un regard. Elle dialogue avec la coupe d’origine et avec le motif du foulard, et c’est elle qui fait de chaque vêtement un exemplaire unique. Elle garde la trace des mains qui l’ont faite.","It takes time, precision and an eye. It converses with the original cut and with the scarf’s pattern, and it is what makes each garment one of a kind. It keeps the trace of the hands that made it.")}</p></div></div></div></div>
-    <section class="geste" style="padding-bottom:clamp(40px,5vw,64px);padding-top:clamp(48px,6vw,72px)"><div class="wrap">
+    <section class="geste rb-steps" style="padding-bottom:clamp(40px,5vw,64px);padding-top:clamp(48px,6vw,72px)"><div class="wrap">
       <ol class="steps five">${steps.map((s,i)=>`<li class="step"><div class="step-media">${s[2]?`<img src="${s[2]}" alt="" loading="lazy">`:""}</div><div class="step-body"><span class="num">${String(i+1).padStart(2,"0")}</span><h3>${s[0]}</h3><p>${s[1]}</p>${s[3]?`<span class="place">${s[3]}</span>`:""}</div></li>`).join("")}</ol>
     </div></section>
-    <section style="padding-top:clamp(40px,5vw,64px)"><div class="wrap">${head(x("Avant, après","Before, after"),x("Une matière, deux vies","One material, two lives"),x("Des foulards chinés à la pièce finale : la même matière, une seconde vie.","From found scarves to the finished piece: the same material, a second life."))}
+    <section class="rb-avant" style="padding-top:clamp(40px,5vw,64px)"><div class="wrap">${head(x("Avant, après","Before, after"),x("Une matière, deux vies","One material, two lives"),x("Des foulards chinés à la pièce finale : la même matière, une seconde vie.","From found scarves to the finished piece: the same material, a second life."))}
       <div class="diptych">
         <figure class="frame"><img src="${IMG.IMG_AVANT}" alt="${x("Foulards vintage chinés, paisley et rayures, posés sur la table de l’atelier","Found vintage scarves, paisley and stripes, laid out on the workshop table")}" loading="lazy"><figcaption>${x("Avant","Before")} — ${x("foulards vintage chinés","found vintage scarves")}</figcaption></figure>
         <figure class="frame"><img src="${IMG.IMG_APRES}" alt="${x("Chemise portée assis : devant taillé dans le foulard rayé, poignets dans le foulard paisley, manches et col noirs","Shirt worn seated: front cut from the striped scarf, cuffs from the paisley scarf, black sleeves and collar")}" loading="lazy"><figcaption>${x("Après","After")} — ${x("la chemise terminée","the finished shirt")}</figcaption></figure>
       </div></div></section>
-    <section class="reborn-word"><div class="wrap"><span class="eyebrow">${x("Le regard du créateur","The designer’s eye")}</span>
+    <section class="reborn-word rb-quote"><div class="wrap"><span class="eyebrow">${x("Le regard du créateur","The designer’s eye")}</span>
       <figure class="reborn-quote"><blockquote lang="${LANG}">
         <p>${x("J’ai appris à regarder dans l’espace. L’architecture d’intérieur m’a donné la lumière, les volumes, le temps qui patine les matières. Le design d’objets m’a donné la main : un poids, un assemblage juste, un détail qui se révèle à l’usage.","I learned to see through space. Interior architecture gave me light, volume, the time that softens materials. Object design gave me the hand: a weight, a true joint, a detail that reveals itself in use.")}</p>
         <p>${x("Le vêtement est venu ensuite, comme une pièce de plus à habiter. Je le dessine comme un plan ; sa doublure est un intérieur, le foulard une fenêtre ouverte sur une autre histoire.","Clothing came after, like one more room to inhabit. I draw it as a plan: its lining is an interior, the scarf a window onto another story.")}</p>
