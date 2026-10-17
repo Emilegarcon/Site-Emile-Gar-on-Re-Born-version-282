@@ -374,7 +374,8 @@ section.c-hero{padding-bottom:clamp(28px,3.2vw,44px)!important}
 section.cp-sec{padding-top:clamp(28px,3.2vw,44px)!important;padding-bottom:clamp(28px,3.2vw,44px)!important}
 /* En-tête et pied de page : fond foulards, voile 80 % */
 header.site,body>footer,footer{background-image:linear-gradient(rgba(19,17,16,.80),rgba(19,17,16,.80)),url(img/TEX_ROULEAUX.webp)!important;background-size:cover!important;background-position:center!important}
-.h-oeuvre .head p,section.geste:not(.rb-steps) .head p{max-width:none}@media (min-width:1200px){.h-oeuvre .head p,section.geste:not(.rb-steps) .head p{white-space:nowrap}}
+.h-oeuvre .head p,section.geste:not(.rb-steps) .head p{max-width:none}@media (min-width:1200px){.h-oeuvre .head p,section.geste:not(.rb-steps) .head p{white-space:normal}}
+br.br-d{display:none}@media (min-width:1200px){.m-lede.lede-wide{max-width:none!important}br.br-d{display:inline}}
 .vals.vals-3{grid-template-columns:repeat(3,1fr)}@media (max-width:900px){.vals.vals-3{grid-template-columns:1fr}}
 .vals{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,40px)}
 .vals li{border-top:1px solid var(--ink);padding-top:18px}
@@ -1242,7 +1243,7 @@ V.pieces=(q)=>{
   const archive=st==="vendue";
   return {title:(archive?x("Archive","Archive"):x("La collection","The collection"))+" — Emile Garçon", html:`<div class="wrap">
     <div class="page-head coll-head"><span class="eyebrow">${archive?x("Archive — pièces vendues","Archive — sold pieces"):x("Pièces uniques, disponibles","One-of-a-kind pieces, available")}</span><h1 tabindex="-1">${archive?x("Archive","Archive"):x("La collection","The collection")}</h1>
-      <p class="m-lede">${archive?x("Les pièces qui ont trouvé preneur restent visibles avec leur histoire. Elles ne sont plus en vente.","Pieces that have found an owner remain visible with their story. They are no longer for sale."):x("Un seul exemplaire par pièce, chinée puis reprise et brodée à la main entre Tunis et Paris. Sa taille, héritée du vêtement d’origine, est unique.","One of each piece, found, then reworked and embroidered by hand between Tunis and Paris. Its size, inherited from the original garment, is unique.")}</p></div>
+      <p class="m-lede lede-wide">${archive?x("Les pièces qui ont trouvé preneur restent visibles avec leur histoire. Elles ne sont plus en vente.","Pieces that have found an owner remain visible with their story. They are no longer for sale."):x("Un seul exemplaire par pièce, chinée puis reprise et brodée à la main entre Tunis et Paris.<br class='br-d'> Sa taille, héritée du vêtement d’origine, est unique.","One of each piece, found, then reworked and embroidered by hand between Tunis and Paris.<br class='br-d'> Its size, inherited from the original garment, is unique.")}</p></div>
     <div class="filters">
       <div class="chips" role="group" aria-label="${x("Catégorie","Category")}">${["all",...CATS].filter(c=>!HIDDEN_TYPES.includes(c)).map(c=>`<button type="button" data-cat="${c}" aria-pressed="${c===cat}">${c==="all"?x("Toutes","All"):x(CAT[c][0],CAT[c][1])}</button>`).join("")}</div>
       <div class="sel"><label for="f-st">${x("Disponibilité","Availability")}</label><select id="f-st">
@@ -1344,7 +1345,7 @@ V.reborn=()=>{
 };
 
 V.maison=(sec)=>({title:x("La Maison Garçon","The Garçon House")+" — Emile Garçon", html:`<div class="wrap">
-  <div class="page-head m-head"><span class="eyebrow">${x("Transmission","Inheritance")}</span><h1 tabindex="-1">${x("La Maison Garçon","The Garçon House")}</h1><p class="m-lede">${x("Chez les Garçon, on apprend à regarder la matière avant de la transformer. Trois générations, trois métiers, un même fil.","In the Garçon family, you learn to look at a material before you change it. Three generations, three crafts, one thread.")}</p></div></div>
+  <div class="page-head m-head"><span class="eyebrow">${x("Transmission","Inheritance")}</span><h1 tabindex="-1">${x("La Maison Garçon","The Garçon House")}</h1><p class="m-lede lede-wide">${x("Chez les Garçon, on apprend à regarder la matière avant de la transformer.<br class='br-d'> Trois générations, trois métiers, un même fil.","In the Garçon family, you learn to look at a material before you change it.<br class='br-d'> Three generations, three crafts, one thread.")}</p></div></div>
 
   <section class="m-story m-first"><div class="wrap">
     <div class="m-intro"><span class="eyebrow">${x("Histoire","History")}</span><h2 id="m-histoire" tabindex="-1">${x("Un fil de famille","A family thread")}</h2></div>
