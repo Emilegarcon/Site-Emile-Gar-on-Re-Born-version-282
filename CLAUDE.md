@@ -21,6 +21,7 @@ GitHub Pages republie le site automatiquement (environ 1 minute). Domaine prévu
 - `IMG` : clé → chemin `img/*.webp`. Images de presse dans `img/presse/`.
 - `PRESS` : articles de presse. `STATES`, `buyable()` : états de vente.
 - Panier : `bag` (localStorage), `drawCart()`, `goCheckout()`.
+- Pages statiques `retours.html` et `contact.html` (lisibles sans JavaScript, exigées par Pinterest pour les commerçants) et données structurées JSON-LD dans `<head>` : **à tenir à jour** si la politique de retour, les frais d’envoi ou les coordonnées changent.
 
 ## Shopify (boutique iwkwfi-et.myshopify.com, nom « Emile Garçon »)
 - Le bouton « Passer commande » ouvre le paiement Shopify via un lien de panier :
