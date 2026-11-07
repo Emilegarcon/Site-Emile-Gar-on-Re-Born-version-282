@@ -1852,6 +1852,8 @@ document.getElementById("menu-x").addEventListener("click",()=>{closeMenu();docu
 document.getElementById("menu").addEventListener("click",e=>{ if(e.target.closest("a")) closeMenu(); });
 document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ const g=document.getElementById("gate"); if(!g.hidden){closeGate("fr");return;} closeAll(); closeMenu(); } });
 window.addEventListener("hashchange",()=>render());
+/* Liens externes (Pinterest…) sans fragment : ?piece=<handle> ouvre la fiche */
+(function(){const h=new URLSearchParams(location.search).get("piece");if(h&&!location.hash&&(P.some(p=>p.h===h)||C.some(c=>c.h===h)))history.replaceState(null,"",location.pathname+(C.some(c=>c.h===h)?"#/couture/":"#/piece/")+h);})();
 chrome(); render(); gate(); syncShop();
 
 /* Typographie de marque : le « (Re) » de (Re)Born toujours en italique, partout où le nom s'affiche */
